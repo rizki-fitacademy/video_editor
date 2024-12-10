@@ -52,10 +52,13 @@ class VideoEditorController extends ChangeNotifier {
     this.coverStyle = const CoverSelectionStyle(),
     this.cropStyle = const CropGridStyle(),
     TrimSliderStyle? trimStyle,
-  })  : _video = VideoPlayerController.file(File(
-          // https://github.com/flutter/flutter/issues/40429#issuecomment-549746165
-          Platform.isIOS ? Uri.encodeFull(file.path) : file.path,
-        )),
+  })  : _video = VideoPlayerController.file(
+          File(
+            // https://github.com/flutter/flutter/issues/40429#issuecomment-549746165
+            Platform.isIOS ? Uri.encodeFull(file.path) : file.path,
+          ),
+          videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+        ),
         trimStyle = trimStyle ?? TrimSliderStyle(),
         assert(maxDuration > minDuration,
             'The maximum duration must be bigger than the minimum duration');
